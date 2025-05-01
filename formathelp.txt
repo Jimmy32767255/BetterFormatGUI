@@ -1,0 +1,85 @@
+格式化磁盘以供 Windows 使用。
+
+FORMAT volume [/FS:file-system] [/V:label] [/Q] [/L[:state]] [/A:size] [/C] [/I:state] [/X] [/P:passes] [/S:state]
+FORMAT volume [/V:label] [/Q] [/F:size] [/P:passes]
+FORMAT volume [/V:label] [/Q] [/T:tracks /N:sectors] [/P:passes]
+FORMAT volume [/V:label] [/Q] [/P:passes]
+FORMAT volume [/Q]
+
+  volume          指定驱动器号(后面跟一个冒号)、
+                  装入点或卷名。
+  /FS:filesystem  指定文件系统类型(FAT、FAT32、exFAT、
+                  NTFS、UDF、ReFS)。
+  /V:label        指定卷标。
+  /Q              执行快速格式化。请注意，此开关可替代 /P。
+  /C              仅适于 NTFS: 默认情况下，将压缩在该新建卷上创建的
+                  文件。
+  /X              如果必要，请先强制卸除卷。该卷的所有打开句柄
+                  不再有效。
+  /R:revision     仅 UDF: 强制格式化为特定的 UDF 版本
+                  (1.02、1.50、2.00、2.01、2.50)。
+                  默认 修订版为 2.01。
+  /D              仅适用于 UDF 2.50: 将复制元数据。
+  /L[:state]      仅适用于 NTFS: 覆盖文件记录的默认大小。
+                  默认情况下，非分层卷将使用较小的
+                  文件记录格式化，分层卷将使用较大的
+                  文件记录格式化。/L 和 /L:enable 会强制使用较大的文件记录
+                  格式化，而 /L:disable 会强制使用较小的
+                  文件记录格式化。
+  /A:size         替代默认分配单元大小。强烈建议你在通常情况下使用
+                  默认配置。
+                  ReFS 支持 4096、64K。
+                  NTFS 支持 512、1024、2048、4096、8192、16K、32K、64K、
+                  128K、256K、512K、1M、2M。
+                  FAT 支持 512、1024、2048、4096、8192、16K、32K、64K，
+                  (128K、256K 用于大于 512 个字节的扇区)。
+                  FAT32 支持 512、1024、2048、4096、8192、16K、32K、64K，
+                  (128K、256K 用于大于 512 个字节的扇区)。
+                  exFAT 支持 512、1024、2048、4096、8192、16K、32K、64K、
+                  128K、256K、512K、1M、2M、4M、8M、16M、32M。
+
+                  请注意，FAT 和 FAT32 文件系统
+                  对卷上的群集数量施加以下限制:
+
+                  FAT: 群集数量 <= 65526
+                  FAT32: 65526 < 群集数量 < 4177918
+
+                  如果判定使用的指定群集大小无法
+                  满足以上需求，将立即
+                  停止格式化。
+
+                  大于 4096 的分配单元大小
+                  不支持 NTFS 压缩。
+
+  /F:size         指定要格式化的软盘大小(1.44)
+  /T:tracks       为磁盘指定每面磁道数。
+  /N:sectors      指定每条磁道的扇区数。
+  /P:count        每次写入零至各扇区后，使用不同的随机
+                 编号覆盖卷"count"。
+                  如果"count"为零，我们将对
+                  卷上的各扇区清零。如果指定了 /Q，将忽略此切换。
+  /S:state        指定对短文件名的支持(enable、disable)
+                  默认情况下禁用了短名称
+  /TXF:state      指定是否应启用/禁用 txf (enable、disable)
+                   默认情况下，将启用 TxF
+  /I:state        仅 ReFS: 指定是否应在新卷上
+                  启用完整性。"state" 为 "enable" 或 "disable"
+                  默认情况下，在支持数据冗余的存储上
+                  启用完整性。
+  /DAX[:state]    仅适用于 NTFS: 对此卷启用直接访问存储(DAX)
+                  模式。在 DAX 模式下，可以通过内存总线
+                  访问卷，从而大幅提升 IO 性能。仅当硬件
+                  支持 DAX 时，才能使用 DAX 模式格式化卷。
+                  State 可指定为 "enable" 或 "disable"。/可将 DAX 视
+                  为 /DAX:enable。
+  /LogSize[:size] 仅适用于 NTFS: 以千字节为单位指定 NTFS 日志文件的大小。
+                  最小支持大小为 2MB，因此即使指定的大小
+                  小于 2MB，也将产生 2MB 的日志文件。零表示
+                  通常取决于卷大小的默认值。
+  /NoRepairLogs   仅适用于 NTFS: 禁用 NTFS 修复日志。如果设置此标志
+                  spotfix (即 chkdsk /spotfix)将不起作用。
+  /DevDrv          将卷格式化为开发人员驱动器。 开发人员驱动器或
+                  开发人员卷，是针对性能优化的卷
+                  开发人员方案。 为管理员提供对哪些内容的控制
+                  微筛选器附加到此卷。
+  /SHA256Checksums 仅ReFS: 在涉及校验和的所有操作中使用 SHA-256。

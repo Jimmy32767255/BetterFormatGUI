@@ -1,0 +1,20 @@
+{
+  "Swap虚拟内存": {
+    "fs": "exFAT",
+    "cluster": "32M",
+    "quick_format": true,
+    "enable_compression": false
+  },
+  "清除敏感数据": {
+    "fs": "NTFS",
+    "cluster": "默认",
+    "quick_format": false,
+    "enable_compression": false
+  },
+  "高性能存储": {
+    "fs": "NTFS",
+    "cluster": "64k",
+    "quick_format": true,
+    "enable_compression": false
+  }
+}
