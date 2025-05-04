@@ -244,15 +244,28 @@ class BetterFormatGUI(QMainWindow):
         if preset_name in self.presets_data:
             preset_config = self.presets_data[preset_name]
             
-            # 应用配置，使用 .get() 提供默认值以防某些键不存在
+            # 应用所有控件配置
             self.fs_combo.setCurrentText(preset_config.get("fs", "NTFS"))
             self.cluster_combo.setCurrentText(preset_config.get("cluster", "默认"))
             self.quick_format.setChecked(preset_config.get("quick_format", True))
             self.enable_compression.setChecked(preset_config.get("enable_compression", False))
-            
-            # 可以根据需要添加更多参数的应用逻辑
-            # 例如: self.volume_label.setText(preset_config.get("volume_label", ""))
-            # ... 其他控件 ...
+            self.volume_label.setText(preset_config.get("volume_label", ""))
+            self.Force_volume_disassembly.setChecked(preset_config.get("Force_volume_disassembly", False))
+            self.UDFVersion.setCurrentText(preset_config.get("UDFVersion", "2.01"))
+            self.Copy_UDF_2dot50_metadata.setChecked(preset_config.get("Copy_UDF_2dot50_metadata", False))
+            self.file_record_size.setChecked(preset_config.get("file_record_size", False))
+            self.size.setValue(preset_config.get("size", 0))
+            self.tracks.setValue(preset_config.get("tracks", 0))
+            self.sectors.setValue(preset_config.get("sectors", 0))
+            self.count.setValue(preset_config.get("count", 0))
+            self.short_name_support.setChecked(preset_config.get("short_name_support", False))
+            self.TXF.setChecked(preset_config.get("TXF", False))
+            self.ReFS_integrity.setChecked(preset_config.get("ReFS_integrity", False))
+            self.DAX.setChecked(preset_config.get("DAX", False))
+            self.LogSize.setValue(preset_config.get("LogSize", 0))
+            self.NoRepairLogs.setChecked(preset_config.get("NoRepairLogs", False))
+            self.DevDrv.setChecked(preset_config.get("DevDrv", False))
+            self.SHA256Checksums.setChecked(preset_config.get("SHA256Checksums", False))
         else:
             QMessageBox.warning(self, "警告", f"未找到名为 '{preset_name}' 的预设配置。")
     
